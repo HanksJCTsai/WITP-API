@@ -1,0 +1,28 @@
+<table border="1">
+    <thead>
+        <tr>
+            <th>Version Control</th>
+            <th>Version Control Type</th>
+            <th>Repository ID</th>
+            <th>Repository URL</th>
+            <th>UT Job Name</th>
+            <th>Gitlab Message</th>
+            <th>Coverage</th>
+            <th>Operation</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for vc in vc_list %}
+        <tr>
+            <td>{{vc.version_control}}</td>
+            <td>{{vc.version_control_type}}</td>
+            <td>{{vc.repo_id}}</td>
+            <td>{{vc.repo_url}}</td>
+            <td>{{vc.ut_job_name}}</td>
+            <td>{{vc.gitlab_message}}</td>
+            <td>{{vc.gitlab_coverage}}</td>
+            <td>{{vc.operation}}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>

@@ -1,0 +1,24 @@
+<table border="1">
+    <thead>
+        <tr>
+            <th>User Name</th>
+            <th>Employee ID</th>
+            <th>Email</th>
+            <th>Project Role</th>
+            <th>Jira Role</th>
+            <th>Operation</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for user in user_list %}
+        <tr>
+            <td>{{user.user_name}}</td>
+            <td>{{user.employee_id}}</td>
+            <td>{{user.email}}</td>
+            <td>{{user.project_role}}</td>
+            <td>{{user.jira_role}}</td>
+            <td>{{user.operation}}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>

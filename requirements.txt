@@ -1,0 +1,12 @@
+Django==3.2.9
+psycopg2-binary
+djangorestframework
+drf_yasg
+django-cors-headers
+python-dateutil
+reportbro-fpdf
+fpdf
+pandas
+openpyxl
+matplotlib
+paho-mqtt

@@ -1,0 +1,32 @@
+<HTML>
+    <BODY >
+    Dear {{ signer }} Sir,<BR><BR>
+
+        有收到來自 <strong>{{ project_name }}</strong> 的Jira申請，專案訊息如下，請點選以下連結協助簽核，謝謝。<BR>
+        <a href="https://imp-ui.k8sqas-whq.k8s.wistron.com/pms/waiting-for-approve">https://imp-ui.k8sqas-whq.k8s.wistron.com/pms/waiting-for-approve</a><BR><BR>
+        
+        <strong><li>簽核單號：</li></strong>
+        {{ sign_id }}<BR><BR>
+        <strong><li>申請人備註：</li></strong>
+        {{ remark }}<BR><BR>
+
+        <strong><li>專案內容：</li></strong>
+        {{ project_detail }}<BR><BR>
+
+        <strong><li>專案程式版本庫：</li></strong>
+        {{ vc_detail }}<BR><BR>
+
+        <strong><li>專案Team Member：</li></strong>
+        {{ user_detail }}<BR><BR>
+
+        <strong><li>成員異動：</li></strong>
+        {{ update_user_detail }}<BR><BR>
+
+        Thank you.<BR><BR>
+
+        This mail was sent by Robot , please do not reply.<BR>
+        If you have any questions, please mail to Scott_Yang@wistron.com<BR><BR>
+
+        IMP URL: {{ impurl }}
+    </BODY>
+</HTML>

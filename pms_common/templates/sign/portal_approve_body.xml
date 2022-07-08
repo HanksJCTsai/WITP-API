@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<REQUEST>
+    <HEADER>
+        <SERVICEID>{{ SERVICEID }}</SERVICEID>
+        <AUTHORIZATIONCODE>{{ AUTHORIZATIONCODE }}</AUTHORIZATIONCODE>
+        <DATACREATEDTIME>{{ DATACREATEDTIME }}</DATACREATEDTIME>
+    </HEADER>
+    <FORMDATA>
+        <SYSTEMID>IMP - PMS - QAS</SYSTEMID>
+        <ACTIONLIST />
+        <PRIORITY />
+        <FORMTYPE>{{ FORMTYPE }}</FORMTYPE>
+        <FORMID>{{ SIGN.sign_id }}-{{ SIGNSEQ }}</FORMID>
+        <USERID>{{ USERID }}</USERID>
+        <TITLE>Jira帳號與專案申請: {{ PROJECT.project_name }}</TITLE>
+        <SUBJECT>{{ PROJECT.division }}-{{ PROJECT.create_user }}</SUBJECT>
+        <SUMMARY>
+            <section title="簽核單內容" type="LIST"> 
+                <Row>
+                    <col title="簽核單號"  titlecolor="black">{{ SIGN.sign_id }}</col>
+                    <col title="申請人備註"  titlecolor="black">{{ SIGN.requester_remark }}</col>
+                </Row>
+            </section>
+            <section title="專案資訊" type="LIST">
+                <Row>
+                    <col title="專案名稱"  titlecolor="black" textcolor="black">{{ PROJECT.project_name }}</col>
+                    <col title="Project Code" titlecolor="black" textcolor="black">{{ PROJECT.project_code }}</col>
+                    <col title="處級" titlecolor="black" textcolor="black">{{ PROJECT.division }}</col>
+                    <col title="處級主管" titlecolor="black" textcolor="black">{{ PROJECT.division_supervisor }}</col>
+                    <col title="專案模式" titlecolor="black" textcolor="black">{{ PROJECT.mode }}</col>
+                    <col title="產品/ 模型" titlecolor="black" textcolor="black">{{ PROJECT.product_type }}</col>
+                    <col title="預計開始日期" titlecolor="black" textcolor="black">{{ PROJECT.plan_start }}</col>
+                </Row>
+            </section>
+            <section title="專案資訊" type="GROUP">
+                <Row>
+                    <col>
+                        <title>專案程式清單</title>
+                        <section title="專案程式清單" type="TABLE">
+                            {% for vc in VCLIST %}
+                            <Row>
+                                <col title="Version Control">{{ vc.version_control }}</col>
+                                <col title="Version Control Type">{{ vc.version_control_type }}</col>
+                                <col title="Repository ID">{{ vc.repo_id }}</col>
+                                <col title="Repository URL">{{ vc.repo_url }}</col>
+                                <col title="UT Job Namee">{{ vc.ut_job_name }}</col>
+                            </Row>
+                            {% endfor %}
+                        </section>
+                    </col>
+                    <col>
+                        <title>專案Member清單</title>
+                        <section title="專案總人數： {{ USERCOUNT }}" type="TABLE">
+                            {% for user in USERLIST %}
+                            <Row>
+                                <col title="User Name">{{ user.user_name }}</col>
+                                <col title="Employee ID">{{ user.employee_id }}</col>
+                                <col title="Email">{{ user.email }}</col>
+                                <col title="Project Role">{{ user.project_role }}</col>
+                                <col title="Jira Role">{{ user.jira_role }}</col>
+                            </Row>
+                            {% endfor %}
+                        </section>
+                    </col>
+                </Row>
+            </section>
+            <section title="異動清單 (新增人數： {{ ADDUSERCOUNT }}；更新人數： {{ UPDATEUSERCOUNT }}；刪除人數： {{ DELETEUSERCOUNT }})" type="TABLE">
+                {% for user in UPDATEUSERLIST %}
+                <Row>
+                    <col title="User Name">{{ user.user_name }}</col>
+                    <col title="Employee ID">{{ user.employee_id }}</col>
+                    <col title="Email">{{ user.email }}</col>
+                    <col title="Project Role">{{ user.project_role }}</col>
+                    <col title="Jira Role">{{ user.jira_role }}</col>
+                    <col title="Operation">{{ user.operation }}</col>
+                </Row>
+                {% endfor %}
+            </section>
+        </SUMMARY>
+        <MESSAGEID/>
+        <ATTACHLIST/>
+        <CHKRESULT/>
+        <APPRSUMMARY/>
+        <APPROVALCOMMENT>1</APPROVALCOMMENT><!--有這個標籤不管同意不同意都要顯示填寫意見框-->
+    </FORMDATA>
+</REQUEST>

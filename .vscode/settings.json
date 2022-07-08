@@ -1,0 +1,5 @@
+{
+    "python.pythonPath": "d:/py37/Scripts/Activate.ps1",
+    "python.formatting.provider": "black"
+
+}

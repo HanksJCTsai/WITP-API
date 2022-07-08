@@ -1,0 +1,90 @@
+# test
+image: harbor.wistron.com/base_image/python:3.7-stretch
+
+stages:
+  - test
+  - build
+  - update
+# services:
+#   - postgres:latest
+
+# before_script:
+#   - python -V # Print out python version for debugging
+
+test:
+  stage: test
+  script:
+    - python -V # Print out python version for debugging
+    - pip install -r requirements.txt
+    - python manage.py makemigrations --merge
+    - python manage.py makemigrations
+    - python manage.py migrate
+    # - python manage.py test
+  tags:
+    - k8s-runners
+
+build_test_image:
+  only:
+    - dev
+  stage: build
+  image: harbor.wistron.com/base_image/docker:stable
+  tags:
+    - k8s-runners
+  variables:
+
+  script:
+    - echo "this is docker image packing for TEST"
+    - docker build -t ${BUILD_IMAGE_NAME}:${DOCKER_TEST_IMAGE_TAG} --rm=true .
+    - docker tag ${BUILD_IMAGE_NAME}:${DOCKER_TEST_IMAGE_TAG} ${HARBOR_URL}/${HARBOR_PROJECT}/${BUILD_IMAGE_NAME}:${DOCKER_TEST_IMAGE_TAG}
+    - echo "${HARBOR_PASSWORD}" | docker login -u "${HARBOR_USER}" --password-stdin ${HARBOR_URL}
+    - docker push ${HARBOR_URL}/${HARBOR_PROJECT}/${BUILD_IMAGE_NAME}:${DOCKER_TEST_IMAGE_TAG}
+
+build_PRD_image:
+  only:
+    - master
+  stage: build
+  image: harbor.wistron.com/base_image/docker:stable
+  tags:
+    - k8s-runners
+  variables:
+
+  script:
+    - echo "this is docker image packing for PRD"
+    - docker build -t ${BUILD_IMAGE_NAME}:${DOCKER_PRD_IMAGE_TAG} --rm=true .
+    - docker tag ${BUILD_IMAGE_NAME}:${DOCKER_PRD_IMAGE_TAG} ${HARBOR_URL}/${HARBOR_PROJECT}/${BUILD_IMAGE_NAME}:${DOCKER_PRD_IMAGE_TAG}
+    - echo "${HARBOR_PASSWORD}" | docker login -u "${HARBOR_USER}" --password-stdin ${HARBOR_URL}
+    - docker push ${HARBOR_URL}/${HARBOR_PROJECT}/${BUILD_IMAGE_NAME}:${DOCKER_PRD_IMAGE_TAG}
+
+qas_update:
+  only:
+    - dev
+  stage: update
+  image: harbor.wistron.com/base_image/alpine:3.10
+  before_script:
+    - apk add curl
+    - export CI_JOB_TIMESTAMP=$(date +"%s")
+  tags:
+    - k8s-runners
+  script:
+    - echo $CI_JOB_TIMESTAMP
+    - echo "{\"annotations\":{\"cattle.io/timestamp\":$CI_JOB_TIMESTAMP}}" > json.txt
+    - cat json.txt
+    - echo curl -H "Authorization:${K8S_QAS_KEY}" -H "Content-Type:application/json" -d "@json.txt" -X PUT ${K8S_QAS_API}
+    - curl -H "Authorization:${K8S_QAS_KEY}" -H "Content-Type:application/json" -d "@json.txt" -X PUT ${K8S_QAS_API}
+
+prd_update:
+  only:
+    - master
+  stage: update
+  image: harbor.wistron.com/base_image/alpine:3.10
+  before_script:
+    - apk add curl
+    - export CI_JOB_TIMESTAMP=$(date +"%s")
+  tags:
+    - k8s-runners
+  script:
+    - echo $CI_JOB_TIMESTAMP
+    - echo "{\"annotations\":{\"cattle.io/timestamp\":$CI_JOB_TIMESTAMP}}" > json.txt
+    - cat json.txt
+    - echo curl -H "Authorization:${K8S_PRD_KEY}" -H "Content-Type:application/json" -d "@json.txt" -X PUT ${K8S_PRD_API}
+    - curl -H "Authorization:${K8S_PRD_KEY}" -H "Content-Type:application/json" -d "@json.txt" -X PUT ${K8S_PRD_API}

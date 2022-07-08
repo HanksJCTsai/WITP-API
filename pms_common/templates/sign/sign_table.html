@@ -1,0 +1,24 @@
+<table border="1">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>簽核人</th>
+            <th>簽核人Email</th>
+            <th>簽核結果</th>
+            <th>備註</th>
+            <th>簽核日期</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for sign in sign_list %}
+        <tr>
+            <td>{{sign.detail_seq}}</td>
+            <td>{{sign.sign_user}}</td>
+            <td>{{sign.sign_user_email}}</td>
+            <td>{{sign.result}}</td>
+            <td>{{sign.remark}}</td>
+            <td>{{sign.signed_date}}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>

@@ -1,0 +1,60 @@
+<html>
+  <body>
+    Hi Tech Leader {{ username }},<br /><br />
+
+    Your project was already created successfully.<br />
+    The URL is: https://swpc.atlassian.net/browse/{{jira_key}}<br />
+    Jira Key: {{jira_key}}<br />
+    Add User:
+    <table border="1">
+      <thead><tr><th>Add User Result</th></tr></thead>
+      <tbody>{% for result in add_user_result %}
+          <tr><td>{{result}}</td></tr>
+          {% endfor %}</tbody>
+    </table><br />
+    Delete User:
+    <table border="1">
+      <thead><tr><th>Delete User Result</th></tr></thead>
+      <tbody>{% for result in delete_user_result %}
+          <tr><td>{{result}}</td></tr>
+          {% endfor %}</tbody>
+    </table><br />
+    Remark: {{remark}}<br /><br />
+
+    Please follow below step to set up your project.<br /><br /><br />
+
+    1. Jira invitation mail was already sent to the new member in Jira, please
+    login and register by the url in the mail.<br /><br />
+
+    2. Please add Bruce CH Chang & Scott Yang into your Gilab Repository as
+    maintainer.<br /><br />
+
+    3. Please make sure your project have UT Coverage (both frontend and
+    backend).<br />
+    a. Set up UT job name.<br />
+    <img src="https://imp-ui.k8sqas-whq.k8s.wistron.com/assets/pms-guide-image/UTJobName-1.png" alt="Set up UT job name"><br />
+    b. Make sure your GitLab can show the UT coverage. <br />
+    <img src="https://imp-ui.k8sqas-whq.k8s.wistron.com/assets/pms-guide-image/UTJobName-2.png" alt="Make sure your gitlab can show the UT coverage"><br />
+    c. If no, you can set the UT Coverage regular expression in CI/CD Setting in your GitLab. <br />
+    <img src="https://imp-ui.k8sqas-whq.k8s.wistron.com/assets/pms-guide-image/UTJobName-3.png" alt="Make sure your gitlab can show the UT coverage"><br /><br />
+
+    4. Let every member set ther employee id in Jira user account.<br />
+    <img src="https://imp-ui.k8sqas-whq.k8s.wistron.com/assets/pms-guide-image/JiraEmployeeID-1.png" alt="set ther employee id in Jira user account"><br />
+    <img src="https://imp-ui.k8sqas-whq.k8s.wistron.com/assets/pms-guide-image/JiraEmployeeID-2.png" alt="set ther employee id in Jira user account"><br /><br />
+
+    5. Please set up the member role in your Jira Project. Thank you.<br /><br />
+    <img src="https://imp-ui.k8sqas-whq.k8s.wistron.com/assets/pms-guide-image/JiraProjectRole-1.png" alt="set ther member role"><br />
+    <img src="https://imp-ui.k8sqas-whq.k8s.wistron.com/assets/pms-guide-image/JiraProjectRole-2.png" alt="set ther member role"><br /><br />
+
+    6. Plese DO NOT change the sequence and name of the default workflow in JIRA (To do, In Progress, and Done). 
+       You can add other flow for your project.
+    <img src="https://imp-ui.k8sqas-whq.k8s.wistron.com/assets/pms-guide-image/Jira-Workflow.png" alt="Jira Workflow"><br />
+
+    7. Please send email to Scott_Yang@wistron.com after all steps finished.
+
+    This mail was sent by Robot , please do not reply.<br />
+    If you have any questions, please mail to Scott_Yang@wistron.com<br /><br />
+
+    IMP URL: {{ impurl }}
+  </body>
+</html>
